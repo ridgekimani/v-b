@@ -1,4 +1,5 @@
 const pkg = require('./package')
+require('dotenv').config()
 
 module.exports = {
   mode: 'spa',
@@ -14,7 +15,8 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href:'https://fonts.googleapis.com/css?family=Lora' }
     ]
   },
 
@@ -48,12 +50,17 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: "https://api.tipe.io/api/v1",
   },
 
   /*
   ** Build configuration
   */
+  env: {
+    secretKey: process.env.SECRET_KEY,
+    apiKey: process.env.API_KEY
+
+  },
   build: {
     postcss: {
       plugins: {
