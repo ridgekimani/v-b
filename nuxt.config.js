@@ -1,8 +1,12 @@
 const pkg = require('./package')
+
 require('dotenv').config()
 
+const axios = require("axios")
+
+
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
 
   /*
   ** Headers of the page
@@ -35,6 +39,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/axios'
   ],
 
   /*
@@ -51,17 +56,25 @@ module.exports = {
   */
   axios: {
     baseURL: "https://api.tipe.io/api/v1",
+    credentials: {
+      "Tipe-Id": process.env.SECRET_KEY,
+      "Authorization": process.env.API_KEY
+    }
+  },
+
+  /*
+  ** Add environment variables
+  */
+  env: {
+    secretKey: process.env.SECRET_KEY,
+    apiKey: process.env.API_KEY
   },
 
   /*
   ** Build configuration
   */
-  env: {
-    secretKey: process.env.SECRET_KEY,
-    apiKey: process.env.API_KEY
-
-  },
   build: {
+    vendor: ['axios'],
     postcss: {
       plugins: {
         'postcss-cssnext': {
@@ -71,6 +84,7 @@ module.exports = {
         }
       }
     },
+
     /*
     ** You can extend webpack config here
     */
@@ -85,5 +99,30 @@ module.exports = {
         })
       }
     }
+  },
+
+  /*
+  ** Generate urls
+  */
+  generate: {
+    routes: async function () {
+      const instance = axios.create({
+        baseURL: 'https://api.tipe.io/api/v1',
+        headers: {
+          Authorization: process.env.API_KEY,
+          "Tipe-Id": process.env.SECRET_KEY,
+
+        }
+      });
+      const response = await instance.get('/folder/5b54c88a9515380013402617')
+      return response.data.documents.map(val => {
+        return {
+          route: `/${val.id}`,
+          payload: val
+        }
+      })
+    }
   }
+
+
 }

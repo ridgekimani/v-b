@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header />
     <nuxt/>
   </div>
 </template>
@@ -25,3 +26,9 @@ body {
   font-family: 'Lora', serif;
 }
 </style>
+<script>
+  import Header from "~/components/Header";
+  export default {
+    components: { Header }
+  }
+</script>

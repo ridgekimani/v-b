@@ -1,13 +1,11 @@
 <template>
   <main>
-    <header>
-      <Header />
-    </header>
     <div class="content">
       <Article
-        v-for="article in articles"
+        v-for="(article, index) in articles"
         :key="article.key"
         :article="article"
+        :index="index+1"
       />
     </div>
   </main>
@@ -26,12 +24,11 @@
       }
     },
     components: {Article, Header},
-    mounted: async function() {
-      this.$axios.setToken(process.env.apiKey)
-      this.$axios.setHeader("Tipe-Id", process.env.secretKey)
-
-      const response = await this.$axios.get("/folder/5b54c88a9515380013402617")
-      this.articles = response.data.documents
+    async asyncData(context) {
+      const response = await context.app.$axios.get("/folder/5b54c88a9515380013402617")
+      return {
+        articles: response.data.documents
+      }
     }
   }
 </script>
@@ -39,5 +36,7 @@
 <style>
   .content {
     padding-top: 100px;
+    display: flex;
+    flex-direction: column-reverse;
   }
 </style>
