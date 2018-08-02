@@ -22,17 +22,19 @@
       data: function() {
         return { article }
       },
-      mounted: async function() {
+      async asyncData({ params, payload, app })  {
+        if (!payload) {
           const data = {}
-          const docID = this.$route.params.id
-          const response = await this.$axios.get(`/document/${docID}`)
+          const response = await app.$axios.get(`/document/${params.id}`)
           response.data.blocks.forEach(val => {
             data[val.name] = val.value
           })
-          this.article = data
-      },
-      async asyncData({ params, payload })  {
-        if (payload && payload.id === params.id) {
+          return {
+            article: data
+          }
+
+        }
+        if (payload.id === params.id) {
           const data = {}
           payload.blocks.forEach(val => {
             data[val.name] = val.value
