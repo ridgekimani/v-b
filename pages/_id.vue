@@ -22,8 +22,17 @@
       data: function() {
         return { article }
       },
+      mounted: async function() {
+          const data = {}
+          const docID = this.$route.params.id
+          const response = await this.$axios.get(`/document/${docID}`)
+          response.data.blocks.forEach(val => {
+            data[val.name] = val.value
+          })
+          this.article = data
+      },
       async asyncData({ params, payload })  {
-        if (payload.id === params.id) {
+        if (payload && payload.id === params.id) {
           const data = {}
           payload.blocks.forEach(val => {
             data[val.name] = val.value
@@ -31,7 +40,9 @@
           return {
             article: data
           }
-
+        }
+        return {
+          article: {}
         }
       }
     }

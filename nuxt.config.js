@@ -56,10 +56,6 @@ module.exports = {
   */
   axios: {
     baseURL: "https://api.tipe.io/api/v1",
-    credentials: {
-      "Tipe-Id": process.env.SECRET_KEY,
-      "Authorization": process.env.API_KEY
-    }
   },
 
   /*

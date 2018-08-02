@@ -1,9 +1,12 @@
 <template>
   <nav class="top-bar">
-    <img
-      src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2018/02/logo_retina_248.png"
-      class="nav-image"
-    />
+    <nuxt-link to="/">
+      <img
+        src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2018/02/logo_retina_248.png"
+        class="nav-image"
+      />
+    </nuxt-link>
+
     <ul class="top-bar-items">
       <li class="top-bar-list-item">Home</li>
       <li class="top-bar-list-item">Latest</li>

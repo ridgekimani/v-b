@@ -7,7 +7,7 @@
           {{ art.blogBody }}
         </div>
         <nuxt-link
-          :to="{path: link}"
+          :to="link"
           class="continue-reading"
 
         >
