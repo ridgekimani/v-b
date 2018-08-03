@@ -6,14 +6,17 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "headers": [{
+      "source": "**",
+      "headers": [{
+        "key": "Cache-Control",
+        "value": "max-age=86400"
+      }]
+    }],
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "max-age=86400"
-        }]
+        "destination": "/index.html"
       }
     ]
   }
