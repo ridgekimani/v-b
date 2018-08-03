@@ -9,7 +9,11 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/index.html",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "max-age=86400"
+        }]
       }
     ]
   }
