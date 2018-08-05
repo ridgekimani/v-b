@@ -1,7 +1,12 @@
 const pkg = require('./package')
 
+require('dotenv').config()
+
+const axios = require("axios")
+
+
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
 
   /*
   ** Headers of the page
@@ -14,7 +19,8 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'preconnect', href:'https://fonts.googleapis.com/css?family=Lora', crossorigin: true }
     ]
   },
 
@@ -33,6 +39,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/axios'
   ],
 
   /*
@@ -48,13 +55,22 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: "https://api.tipe.io/api/v1",
+  },
+
+  /*
+  ** Add environment variables
+  */
+  env: {
+    secretKey: process.env.SECRET_KEY,
+    apiKey: process.env.API_KEY
   },
 
   /*
   ** Build configuration
   */
   build: {
+    vendor: ['axios'],
     postcss: {
       plugins: {
         'postcss-cssnext': {
@@ -64,6 +80,7 @@ module.exports = {
         }
       }
     },
+
     /*
     ** You can extend webpack config here
     */
@@ -78,5 +95,30 @@ module.exports = {
         })
       }
     }
+  },
+
+  /*
+  ** Generate urls
+  */
+  generate: {
+    routes: async function () {
+      const instance = axios.create({
+        baseURL: 'https://api.tipe.io/api/v1',
+        headers: {
+          Authorization: process.env.API_KEY,
+          "Tipe-Id": process.env.SECRET_KEY,
+
+        }
+      });
+      const response = await instance.get('/folder/5b54c88a9515380013402617')
+      return response.data.documents.map(val => {
+        return {
+          route: `/${val.id}`,
+          payload: val
+        }
+      })
+    }
   }
+
+
 }

@@ -87,7 +87,7 @@
     axios-retry "^3.0.2"
     consola "^1.1.4"
 
-"@nuxtjs/bulma@^1.0.3":
+"@nuxtjs/bulma@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@nuxtjs/bulma/-/bulma-1.2.0.tgz#c558a01e78252046b9efa7aa642616dc8725c0a5"
   dependencies:
@@ -1932,6 +1932,10 @@ domutils@1.5.1:
   dependencies:
     dom-serializer "0"
     domelementtype "1"
+
+dotenv@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
 
 duplexer@^0.1.1:
   version "0.1.1"
